@@ -1,0 +1,28 @@
+{
+  "name": "web-development-test",
+  "version": "1.0.0",
+  "description": "Test project for web development environment",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "npx serve public",
+    "dev": "npx live-server public --port=3000",
+    "predeploy": "npm run build || echo 'No build script, copying public folder'",
+    "deploy": "gh-pages -d public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web",
+    "development",
+    "test"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "prettier": "^3.0.0"
+  },
+  "dependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.0"
+  }
+}
