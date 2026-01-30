@@ -135,64 +135,132 @@
     </div>
 
     <script>
-        // This will be updated with real functionality later
-        document.addEventListener('DOMContentLoaded', function() {
-            loadLogs();
-        });
-        
-        function loadLogs() {
-            // Simulate loading logs
-            setTimeout(function() {
-                const container = document.getElementById('logs-container');
-                container.innerHTML = '';
+        let currentPage = 1;
+        const logsPerPage = 20;
+        let allLogs = [];
+
+        async function loadLogs() {
+            try {
+                const response = await fetch('api/logs.json');
+                const data = await response.json();
                 
-                // Sample logs
+                allLogs = data.logs || [];
+                renderLogs();
+                
+                // Update timestamp
+                document.getElementById('logs-timestamp').textContent = new Date(data.lastUpdated).toLocaleTimeString();
+            } catch (error) {
+                console.error('Error loading logs:', error);
+                
+                // Fallback to sample logs if API fails
                 const sampleLogs = [
-                    {timestamp: '2026-01-31 02:30:15', level: 'info', message: 'MoltBot initialized successfully'},
-                    {timestamp: '2026-01-31 02:30:16', level: 'info', message: 'Connected to messaging platform'},
-                    {timestamp: '2026-01-31 02:30:17', level: 'info', message: 'Loaded configuration file'},
-                    {timestamp: '2026-01-31 02:30:20', level: 'info', message: 'Started monitoring channels'},
-                    {timestamp: '2026-01-31 02:35:45', level: 'info', message: 'Received new message from user'},
-                    {timestamp: '2026-01-31 02:35:46', level: 'info', message: 'Processed message: "help"'},
-                    {timestamp: '2026-01-31 02:35:47', level: 'info', message: 'Sent response to user'},
-                    {timestamp: '2026-01-31 02:40:22', level: 'warn', message: 'Slow response detected from external API'},
-                    {timestamp: '2026-01-31 02:45:30', level: 'info', message: 'Daily tutorial search initiated'},
-                    {timestamp: '2026-01-31 02:45:31', level: 'info', message: 'Found 3 new tutorials'}
+                    {timestamp: '2026-01-30 19:30:15', level: 'info', message: 'MoltBot initialized successfully'},
+                    {timestamp: '2026-01-30 19:30:16', level: 'info', message: 'Connected to messaging platform'},
+                    {timestamp: '2026-01-30 19:30:17', level: 'info', message: 'Loaded configuration file'},
+                    {timestamp: '2026-01-30 19:30:20', level: 'info', message: 'Started monitoring channels'},
+                    {timestamp: '2026-01-30 19:35:45', level: 'info', message: 'Received new message from user'},
+                    {timestamp: '2026-01-30 19:35:46', level: 'info', message: 'Processed message: "help"'},
+                    {timestamp: '2026-01-30 19:35:47', level: 'info', message: 'Sent response to user'},
+                    {timestamp: '2026-01-30 19:40:22', level: 'warn', message: 'Slow response detected from external API'},
+                    {timestamp: '2026-01-30 19:45:30', level: 'info', message: 'Daily tutorial search initiated'},
+                    {timestamp: '2026-01-30 19:45:31', level: 'info', message: 'Found 3 new tutorials'}
                 ];
                 
-                sampleLogs.forEach(log => {
-                    const entry = document.createElement('div');
-                    entry.className = 'log-entry';
-                    entry.innerHTML = `
-                        <span class="log-timestamp">${log.timestamp}</span>
-                        <span class="log-level ${log.level}">[${log.level.toUpperCase()}]</span>
-                        <span class="log-message">${log.message}</span>
-                    `;
-                    container.appendChild(entry);
-                });
-            }, 1000);
+                allLogs = sampleLogs;
+                renderLogs();
+            }
         }
-        
+
+        function renderLogs() {
+            const startIndex = (currentPage - 1) * logsPerPage;
+            const endIndex = startIndex + logsPerPage;
+            const logsToShow = allLogs.slice(startIndex, endIndex);
+            
+            const container = document.getElementById('logs-container');
+            container.innerHTML = '';
+            
+            if (logsToShow.length === 0) {
+                container.innerHTML = '<p>No logs available</p>';
+                document.getElementById('page-info').textContent = 'Page 0 of 0';
+                return;
+            }
+            
+            logsToShow.forEach(log => {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.innerHTML = `
+                    <span class="log-timestamp">${new Date(log.timestamp).toLocaleString()}</span>
+                    <span class="log-level ${log.level}">[${log.level.toUpperCase()}]</span>
+                    <span class="log-message">${log.message}</span>
+                `;
+                container.appendChild(entry);
+            });
+
+            // Update pagination info
+            const totalPages = Math.ceil(allLogs.length / logsPerPage);
+            document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+
         function filterLogs() {
-            // Implementation will be added later
-            alert('Filtering logs...');
+            // Apply filters based on selected values
+            const levelFilter = document.getElementById('level-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            
+            let filteredLogs = allLogs;
+            
+            if (levelFilter !== 'all') {
+                filteredLogs = filteredLogs.filter(log => log.level === levelFilter);
+            }
+            
+            if (dateFilter) {
+                filteredLogs = filteredLogs.filter(log => {
+                    const logDate = new Date(log.timestamp).toISOString().split('T')[0];
+                    return logDate === dateFilter;
+                });
+            }
+            
+            // For simplicity, we'll just reset to page 1 with filtered results
+            allLogs = filteredLogs;
+            currentPage = 1;
+            renderLogs();
         }
-        
+
         function refreshLogs() {
             loadLogs();
         }
-        
+
         function downloadLogs() {
-            alert('Downloading logs...');
+            // Create a JSON representation of logs
+            const dataStr = JSON.stringify(allLogs, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `moltbot-logs-${new Date().toISOString().slice(0,10)}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
         }
-        
+
         function prevPage() {
-            alert('Previous page...');
+            if (currentPage > 1) {
+                currentPage--;
+                renderLogs();
+            }
         }
-        
+
         function nextPage() {
-            alert('Next page...');
+            const totalPages = Math.ceil(allLogs.length / logsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderLogs();
+            }
         }
+
+        // Load logs when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLogs();
+        });
     </script>
 </body>
 </html>

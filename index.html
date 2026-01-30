@@ -125,19 +125,75 @@
     </div>
 
     <script>
-        // This will be updated with real functionality later
+        // Load data from API endpoints
+        async function loadData() {
+            try {
+                // Load logs
+                const logsResponse = await fetch('api/logs.json');
+                const logsData = await logsResponse.json();
+                
+                const logsContainer = document.getElementById('logs-container');
+                if (logsData.logs && logsData.logs.length > 0) {
+                    logsContainer.innerHTML = logsData.logs.slice(0, 5).map(log => 
+                        `<div class="log-entry">
+                            <div class="log-date">${new Date(log.timestamp).toLocaleString()}</div>
+                            <div class="log-message">[${log.level}] ${log.message}</div>
+                        </div>`
+                    ).join('');
+                } else {
+                    logsContainer.innerHTML = '<p>No recent logs available</p>';
+                }
+                document.getElementById('logs-timestamp').textContent = new Date(logsData.lastUpdated).toLocaleTimeString();
+                
+                // Load tutorials
+                const tutorialsResponse = await fetch('api/tutorials.json');
+                const tutorialsData = await tutorialsResponse.json();
+                
+                const tutorialsContainer = document.getElementById('tutorials-container');
+                if (tutorialsData.tutorials && tutorialsData.tutorials.length > 0) {
+                    tutorialsContainer.innerHTML = tutorialsData.tutorials.slice(0, 5).map(tutorial => 
+                        `<div class="tutorial-item">
+                            <a href="${tutorial.url}" target="_blank">${tutorial.title}</a>
+                            <div class="log-date">${tutorial.date} (${tutorial.category})</div>
+                        </div>`
+                    ).join('');
+                } else {
+                    tutorialsContainer.innerHTML = '<p>No recent tutorials available</p>';
+                }
+                document.getElementById('tutorials-timestamp').textContent = new Date(tutorialsData.lastUpdated).toLocaleTimeString();
+                
+                // Load tools
+                const toolsResponse = await fetch('api/tools.json');
+                const toolsData = await toolsResponse.json();
+                
+                const toolsContainer = document.getElementById('tools-container');
+                if (toolsData.tools && toolsData.tools.length > 0) {
+                    toolsContainer.innerHTML = toolsData.tools.slice(0, 5).map(tool => 
+                        `<div class="tool-item">
+                            <a href="${tool.testUrl || tool.url}" target="_blank">${tool.name}</a>
+                            <div class="log-date">${tool.category} - ${tool.status}</div>
+                        </div>`
+                    ).join('');
+                } else {
+                    toolsContainer.innerHTML = '<p>No tools discovered yet</p>';
+                }
+                document.getElementById('tools-timestamp').textContent = new Date(toolsData.lastUpdated).toLocaleTimeString();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                
+                // Fallback to sample data if API fails
+                document.getElementById('logs-container').innerHTML = '<p>Could not load logs. Service may be offline.</p>';
+                document.getElementById('tutorials-container').innerHTML = '<p>Could not load tutorials. Service may be offline.</p>';
+                document.getElementById('tools-container').innerHTML = '<p>Could not load tools. Service may be offline.</p>';
+            }
+        }
+        
+        // Load data when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Simulate loading data
-            setTimeout(function() {
-                document.getElementById('logs-container').innerHTML = '<div class="log-entry"><div class="log-date">2026-01-31 02:00:00</div><div class="log-message">MoltBot started successfully</div></div><div class="log-entry"><div class="log-date">2026-01-31 02:15:30</div><div class="log-message">Daily tutorial search initiated</div></div>';
-                document.getElementById('logs-timestamp').textContent = new Date().toLocaleTimeString();
-                
-                document.getElementById('tutorials-container').innerHTML = '<div class="tutorial-item"><a href="#" target="_blank">Getting Started with MoltBot</a><div class="log-date">2026-01-30</div></div><div class="tutorial-item"><a href="#" target="_blank">Advanced MoltBot Configuration</a><div class="log-date">2026-01-29</div></div>';
-                document.getElementById('tutorials-timestamp').textContent = new Date().toLocaleTimeString();
-                
-                document.getElementById('tools-container').innerHTML = '<div class="tool-item"><a href="#" target="_blank">MoltBot Config Generator</a><div class="log-date">Available for testing</div></div><div class="tool-item"><a href="#" target="_blank">MoltBot Performance Monitor</a><div class="log-date">Available for testing</div></div>';
-                document.getElementById('tools-timestamp').textContent = new Date().toLocaleTimeString();
-            }, 1000);
+            loadData();
+            
+            // Refresh data every 5 minutes
+            setInterval(loadData, 5 * 60 * 1000);
         });
     </script>
 </body>

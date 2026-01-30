@@ -190,20 +190,27 @@
     </div>
 
     <script>
-        // This will be updated with real functionality later
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTools();
-        });
-        
-        function loadTools() {
-            // Simulate loading tools
-            setTimeout(function() {
-                const container = document.getElementById('tools-container');
-                container.innerHTML = '';
+        let currentPage = 1;
+        const toolsPerPage = 10;
+        let allTools = [];
+
+        async function loadTools() {
+            try {
+                const response = await fetch('api/tools.json');
+                const data = await response.json();
                 
-                // Sample tools
+                allTools = data.tools || [];
+                renderTools();
+                
+                // Update timestamp
+                document.getElementById('tools-timestamp').textContent = new Date(data.lastUpdated).toLocaleTimeString();
+            } catch (error) {
+                console.error('Error loading tools:', error);
+                
+                // Fallback to sample tools if API fails
                 const sampleTools = [
                     {
+                        id: "1",
                         name: "MoltBot Config Generator",
                         description: "Interactive tool to generate MoltBot configuration files",
                         status: "testing",
@@ -211,9 +218,11 @@
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-30",
-                        author: "Community"
+                        author: "Community",
+                        tags: ["configuration", "utility"]
                     },
                     {
+                        id: "2",
                         name: "MoltBot Performance Monitor",
                         description: "Real-time monitoring dashboard for MoltBot performance metrics",
                         status: "active",
@@ -221,9 +230,11 @@
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-29",
-                        author: "Community"
+                        author: "Community",
+                        tags: ["monitoring", "analytics"]
                     },
                     {
+                        id: "3",
                         name: "Skill Creator Assistant",
                         description: "Web interface for creating and testing new MoltBot skills",
                         status: "active",
@@ -231,9 +242,11 @@
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-28",
-                        author: "Community"
+                        author: "Community",
+                        tags: ["skills", "development"]
                     },
                     {
+                        id: "4",
                         name: "MoltBot Analytics",
                         description: "Detailed analytics and reporting for MoltBot usage",
                         status: "inactive",
@@ -241,58 +254,145 @@
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-27",
-                        author: "Community"
+                        author: "Community",
+                        tags: ["analytics", "reporting"]
                     }
                 ];
                 
-                sampleTools.forEach(tool => {
-                    const card = document.createElement('div');
-                    card.className = 'tool-card';
-                    card.innerHTML = `
-                        <div class="tool-header">
-                            <div class="tool-title">${tool.name}</div>
-                            <div class="tool-status status-${tool.status}">${tool.status.charAt(0).toUpperCase() + tool.status.slice(1)}</div>
-                        </div>
-                        <div class="tool-description">${tool.description}</div>
-                        <div class="tool-actions">
-                            <a href="${tool.url}" class="btn btn-secondary" target="_blank">View Details</a>
-                            <a href="${tool.testUrl}" class="btn btn-success" target="_blank">Test Tool</a>
-                            <button class="btn btn-warning" onclick="deployTool('${tool.name}')">Deploy</button>
-                        </div>
-                        <div class="tool-meta">
-                            <span>Added: ${tool.dateAdded}</span>
-                            <span>Author: ${tool.author}</span>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            }, 1000);
+                allTools = sampleTools;
+                renderTools();
+            }
         }
-        
+
+        function renderTools() {
+            const startIndex = (currentPage - 1) * toolsPerPage;
+            const endIndex = startIndex + toolsPerPage;
+            const toolsToShow = allTools.slice(startIndex, endIndex);
+            
+            const container = document.getElementById('tools-container');
+            container.innerHTML = '';
+            
+            if (toolsToShow.length === 0) {
+                container.innerHTML = '<p>No tools available</p>';
+                document.getElementById('page-info').textContent = 'Page 0 of 0';
+                return;
+            }
+            
+            toolsToShow.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'tool-card';
+                
+                // Format tags
+                const tagsHtml = tool.tags ? 
+                    tool.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : 
+                    '';
+                
+                card.innerHTML = `
+                    <div class="tool-header">
+                        <div class="tool-title">${tool.name}</div>
+                        <div class="tool-status status-${tool.status}">${tool.status.charAt(0).toUpperCase() + tool.status.slice(1)}</div>
+                    </div>
+                    <div class="tool-description">${tool.description}</div>
+                    <div class="tool-tags">
+                        ${tagsHtml}
+                    </div>
+                    <div class="tool-actions">
+                        <a href="${tool.url}" class="btn btn-secondary" target="_blank">View Details</a>
+                        <a href="${tool.testUrl}" class="btn btn-success" target="_blank">Test Tool</a>
+                        <button class="btn btn-warning" onclick="deployTool('${tool.id}', '${tool.name}')">Deploy</button>
+                    </div>
+                    <div class="tool-meta">
+                        <span>Added: ${tool.dateAdded}</span>
+                        <span>Author: ${tool.author}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Update pagination info
+            const totalPages = Math.ceil(allTools.length / toolsPerPage);
+            document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+
         function filterTools() {
-            // Implementation will be added later
-            alert('Filtering tools...');
+            // Apply filters based on selected values
+            const statusFilter = document.getElementById('status-filter').value;
+            const categoryFilter = document.getElementById('category-filter').value;
+            
+            let filteredTools = allTools;
+            
+            if (statusFilter !== 'all') {
+                filteredTools = filteredTools.filter(tool => 
+                    tool.status === statusFilter
+                );
+            }
+            
+            if (categoryFilter !== 'all') {
+                filteredTools = filteredTools.filter(tool => 
+                    tool.category === categoryFilter
+                );
+            }
+            
+            // For simplicity, we'll just reset to page 1 with filtered results
+            allTools = filteredTools;
+            currentPage = 1;
+            renderTools();
         }
-        
+
         function refreshTools() {
             loadTools();
         }
-        
+
         function discoverTools() {
-            alert('Discovering new MoltBot tools...');
+            // This would trigger a new discovery process
+            alert('Initiating new tool discovery process...');
         }
-        
-        function deployTool(name) {
-            alert('Deploying tool: ' + name);
+
+        async function deployTool(id, name) {
+            // In a real implementation, this would call an API to deploy the tool
+            try {
+                // Simulate deployment process
+                alert('Deploying tool: ' + name);
+                
+                // In a real implementation, we would make an API call here:
+                // const response = await fetch(`/api/deploy/${id}`, { method: 'POST' });
+                // const result = await response.json();
+                
+                // Update the tool status in the local data
+                allTools = allTools.map(tool => {
+                    if (tool.id === id) {
+                        return {...tool, status: 'active'};
+                    }
+                    return tool;
+                });
+                
+                // Re-render the tools
+                renderTools();
+            } catch (error) {
+                console.error('Deployment error:', error);
+                alert('Deployment failed: ' + error.message);
+            }
         }
-        
+
         function prevPage() {
-            alert('Previous page...');
+            if (currentPage > 1) {
+                currentPage--;
+                renderTools();
+            }
         }
-        
+
         function nextPage() {
-            alert('Next page...');
+            const totalPages = Math.ceil(allTools.length / toolsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTools();
+            }
         }
+
+        // Load tools when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTools();
+        });
     </script>
 </body>
 </html>

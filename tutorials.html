@@ -153,94 +153,174 @@
     </div>
 
     <script>
-        // This will be updated with real functionality later
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTutorials();
-        });
-        
-        function loadTutorials() {
-            // Simulate loading tutorials
-            setTimeout(function() {
-                const container = document.getElementById('tutorials-container');
-                container.innerHTML = '';
+        let currentPage = 1;
+        const tutorialsPerPage = 10;
+        let allTutorials = [];
+
+        async function loadTutorials() {
+            try {
+                const response = await fetch('api/tutorials.json');
+                const data = await response.json();
                 
-                // Sample tutorials
+                allTutorials = data.tutorials || [];
+                renderTutorials();
+                
+                // Update timestamp
+                document.getElementById('tutorials-timestamp').textContent = new Date(data.lastUpdated).toLocaleTimeString();
+            } catch (error) {
+                console.error('Error loading tutorials:', error);
+                
+                // Fallback to sample tutorials if API fails
                 const sampleTutorials = [
                     {
+                        id: "1",
                         title: "Getting Started with MoltBot",
                         url: "#",
                         date: "2026-01-30",
                         category: "beginner",
                         tags: ["setup", "installation"],
-                        description: "Complete guide to installing and configuring MoltBot for the first time"
+                        description: "Complete guide to installing and configuring MoltBot for the first time",
+                        status: "unread"
                     },
                     {
+                        id: "2",
                         title: "Advanced Configuration Tips",
                         url: "#",
                         date: "2026-01-29",
                         category: "advanced",
                         tags: ["configuration", "optimization"],
-                        description: "Learn how to optimize your MoltBot configuration for maximum efficiency"
+                        description: "Learn how to optimize your MoltBot configuration for maximum efficiency",
+                        status: "unread"
                     },
                     {
+                        id: "3",
                         title: "Integrating with External Services",
                         url: "#",
                         date: "2026-01-28",
                         category: "integration",
                         tags: ["integration", "api"],
-                        description: "Step-by-step guide to connecting MoltBot with external APIs and services"
+                        description: "Step-by-step guide to connecting MoltBot with external APIs and services",
+                        status: "unread"
                     },
                     {
+                        id: "4",
                         title: "Creating Custom Skills",
                         url: "#",
                         date: "2026-01-27",
                         category: "advanced",
                         tags: ["skills", "development"],
-                        description: "How to develop and deploy custom skills for your MoltBot instance"
+                        description: "How to develop and deploy custom skills for your MoltBot instance",
+                        status: "read"
                     }
                 ];
                 
-                sampleTutorials.forEach(tutorial => {
-                    const card = document.createElement('div');
-                    card.className = 'tutorial-card';
-                    card.innerHTML = `
-                        <div class="tutorial-title">
-                            <a href="${tutorial.url}" class="tutorial-link" target="_blank">${tutorial.title}</a>
-                        </div>
-                        <div class="tutorial-description">${tutorial.description}</div>
-                        <div class="tutorial-tags">
-                            ${tutorial.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                        </div>
-                        <div class="tutorial-meta">
-                            <span>${tutorial.date}</span>
-                            <span>${tutorial.category}</span>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-            }, 1000);
+                allTutorials = sampleTutorials;
+                renderTutorials();
+            }
         }
-        
+
+        function renderTutorials() {
+            const startIndex = (currentPage - 1) * tutorialsPerPage;
+            const endIndex = startIndex + tutorialsPerPage;
+            const tutorialsToShow = allTutorials.slice(startIndex, endIndex);
+            
+            const container = document.getElementById('tutorials-container');
+            container.innerHTML = '';
+            
+            if (tutorialsToShow.length === 0) {
+                container.innerHTML = '<p>No tutorials available</p>';
+                document.getElementById('page-info').textContent = 'Page 0 of 0';
+                return;
+            }
+            
+            tutorialsToShow.forEach(tutorial => {
+                const card = document.createElement('div');
+                card.className = 'tutorial-card';
+                
+                // Format tags
+                const tagsHtml = tutorial.tags ? 
+                    tutorial.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : 
+                    '';
+                
+                card.innerHTML = `
+                    <div class="tutorial-title">
+                        <a href="${tutorial.url}" class="tutorial-link" target="_blank">${tutorial.title}</a>
+                    </div>
+                    <div class="tutorial-description">${tutorial.description}</div>
+                    <div class="tutorial-tags">
+                        ${tagsHtml}
+                    </div>
+                    <div class="tutorial-meta">
+                        <span>${tutorial.date}</span>
+                        <span>${tutorial.category}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            // Update pagination info
+            const totalPages = Math.ceil(allTutorials.length / tutorialsPerPage);
+            document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+
         function filterTutorials() {
-            // Implementation will be added later
-            alert('Filtering tutorials...');
+            // Apply filters based on selected values
+            const categoryFilter = document.getElementById('category-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            
+            let filteredTutorials = allTutorials;
+            
+            if (categoryFilter !== 'all') {
+                filteredTutorials = filteredTutorials.filter(tutorial => 
+                    tutorial.category === categoryFilter
+                );
+            }
+            
+            if (dateFilter) {
+                filteredTutorials = filteredTutorials.filter(tutorial => {
+                    const tutorialDate = new Date(tutorial.date).toISOString().split('T')[0];
+                    return tutorialDate === dateFilter;
+                });
+            }
+            
+            // For simplicity, we'll just reset to page 1 with filtered results
+            allTutorials = filteredTutorials;
+            currentPage = 1;
+            renderTutorials();
         }
-        
+
         function refreshTutorials() {
             loadTutorials();
         }
-        
+
         function markAsRead() {
-            alert('Marked all tutorials as read');
+            // Mark all displayed tutorials as read
+            allTutorials = allTutorials.map(tutorial => ({
+                ...tutorial,
+                status: 'read'
+            }));
+            renderTutorials();
         }
-        
+
         function prevPage() {
-            alert('Previous page...');
+            if (currentPage > 1) {
+                currentPage--;
+                renderTutorials();
+            }
         }
-        
+
         function nextPage() {
-            alert('Next page...');
+            const totalPages = Math.ceil(allTutorials.length / tutorialsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTutorials();
+            }
         }
+
+        // Load tutorials when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTutorials();
+        });
     </script>
 </body>
 </html>
