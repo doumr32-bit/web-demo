@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoltBot Management Dashboard</title>
+    <title>MoltBot 管理控制台</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -83,44 +83,44 @@
 <body>
     <div class="container">
         <header>
-            <h1>MoltBot Management Dashboard</h1>
-            <p>Central hub for monitoring, tutorials, and tools</p>
+            <h1>MoltBot 管理控制台</h1>
+            <p>监控、教程和工具的中央枢纽</p>
         </header>
         
         <div class="dashboard-grid">
             <div class="card">
-                <h2>📋 Operation Logs</h2>
+                <h2>📋 操作日志</h2>
                 <div class="logs-container" id="logs-container">
-                    <p><em>Loading operation logs...</em></p>
+                    <p><em>正在加载操作日志...</em></p>
                 </div>
                 <div class="auto-refresh">
-                    <small>Last updated: <span id="logs-timestamp">Never</span></small>
+                    <small>最后更新: <span id="logs-timestamp">从未</span></small>
                 </div>
             </div>
             
             <div class="card">
-                <h2>📖 Latest Tutorials</h2>
+                <h2>📖 最新教程</h2>
                 <div class="tutorials-container" id="tutorials-container">
-                    <p><em>Searching for latest tutorials...</em></p>
+                    <p><em>正在搜索最新教程...</em></p>
                 </div>
                 <div class="auto-refresh">
-                    <small>Last updated: <span id="tutorials-timestamp">Never</span></small>
+                    <small>最后更新: <span id="tutorials-timestamp">从未</span></small>
                 </div>
             </div>
             
             <div class="card">
-                <h2>🛠️ Available Tools</h2>
+                <h2>🛠️ 可用工具</h2>
                 <div class="tools-container" id="tools-container">
-                    <p><em>Discovering tools...</em></p>
+                    <p><em>正在发现工具...</em></p>
                 </div>
                 <div class="auto-refresh">
-                    <small>Last updated: <span id="tools-timestamp">Never</span></small>
+                    <small>最后更新: <span id="tools-timestamp">从未</span></small>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>MoltBot Management Dashboard • Updated in real-time</p>
+            <p>MoltBot 管理控制台 • 实时更新</p>
         </footer>
     </div>
 
@@ -141,7 +141,7 @@
                         </div>`
                     ).join('');
                 } else {
-                    logsContainer.innerHTML = '<p>No recent logs available</p>';
+                    logsContainer.innerHTML = '<p>暂无近期日志</p>';
                 }
                 document.getElementById('logs-timestamp').textContent = new Date(logsData.lastUpdated).toLocaleTimeString();
                 
@@ -158,7 +158,7 @@
                         </div>`
                     ).join('');
                 } else {
-                    tutorialsContainer.innerHTML = '<p>No recent tutorials available</p>';
+                    tutorialsContainer.innerHTML = '<p>暂无近期教程</p>';
                 }
                 document.getElementById('tutorials-timestamp').textContent = new Date(tutorialsData.lastUpdated).toLocaleTimeString();
                 
@@ -175,16 +175,16 @@
                         </div>`
                     ).join('');
                 } else {
-                    toolsContainer.innerHTML = '<p>No tools discovered yet</p>';
+                    toolsContainer.innerHTML = '<p>暂无已发现工具</p>';
                 }
                 document.getElementById('tools-timestamp').textContent = new Date(toolsData.lastUpdated).toLocaleTimeString();
             } catch (error) {
-                console.error('Error loading data:', error);
+                console.error('加载数据错误:', error);
                 
                 // Fallback to sample data if API fails
-                document.getElementById('logs-container').innerHTML = '<p>Could not load logs. Service may be offline.</p>';
-                document.getElementById('tutorials-container').innerHTML = '<p>Could not load tutorials. Service may be offline.</p>';
-                document.getElementById('tools-container').innerHTML = '<p>Could not load tools. Service may be offline.</p>';
+                document.getElementById('logs-container').innerHTML = '<p>无法加载日志。服务可能离线。</p>';
+                document.getElementById('tutorials-container').innerHTML = '<p>无法加载教程。服务可能离线。</p>';
+                document.getElementById('tools-container').innerHTML = '<p>无法加载工具。服务可能离线。</p>';
             }
         }
         

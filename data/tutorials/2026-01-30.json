@@ -58,5 +58,65 @@
     ],
     "description": "Deep dive into advanced MoltBot configuration options.",
     "status": "unread"
+  },
+  {
+    "id": "tutorial-1769801655587",
+    "title": "New MoltBot Feature Tutorial - 1/31/2026",
+    "url": "#",
+    "source": "simulated-search",
+    "date": "2026-01-30T19:34:15.598Z",
+    "category": "beginner",
+    "tags": [
+      "tutorial",
+      "moltbot",
+      "feature"
+    ],
+    "description": "Learn about the latest MoltBot features with this comprehensive tutorial.",
+    "status": "unread"
+  },
+  {
+    "id": "tutorial-1769801655599",
+    "title": "Advanced MoltBot Configuration Guide - 1/31/2026",
+    "url": "#",
+    "source": "simulated-search",
+    "date": "2026-01-30T19:34:15.598Z",
+    "category": "advanced",
+    "tags": [
+      "configuration",
+      "advanced",
+      "moltbot"
+    ],
+    "description": "Deep dive into advanced MoltBot configuration options.",
+    "status": "unread"
+  },
+  {
+    "id": "tutorial-1769801781610",
+    "title": "New MoltBot Feature Tutorial - 1/31/2026",
+    "url": "#",
+    "source": "simulated-search",
+    "date": "2026-01-30T19:36:21.621Z",
+    "category": "beginner",
+    "tags": [
+      "tutorial",
+      "moltbot",
+      "feature"
+    ],
+    "description": "Learn about the latest MoltBot features with this comprehensive tutorial.",
+    "status": "unread"
+  },
+  {
+    "id": "tutorial-1769801781622",
+    "title": "Advanced MoltBot Configuration Guide - 1/31/2026",
+    "url": "#",
+    "source": "simulated-search",
+    "date": "2026-01-30T19:36:21.621Z",
+    "category": "advanced",
+    "tags": [
+      "configuration",
+      "advanced",
+      "moltbot"
+    ],
+    "description": "Deep dive into advanced MoltBot configuration options.",
+    "status": "unread"
   }
 ]

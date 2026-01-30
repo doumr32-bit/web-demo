@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoltBot Tutorials & Resources</title>
+    <title>MoltBot 教程中心 - 管理控制台</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,10 +30,13 @@
             justify-content: space-between;
             margin-bottom: 20px;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .filters {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         select, input, button {
             padding: 8px 12px;
@@ -48,17 +51,14 @@
         }
         .tutorial-card {
             padding: 15px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 10px;
-        }
-        .tutorial-card:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            margin-bottom: 15px;
         }
         .tutorial-title {
             font-weight: bold;
             font-size: 1.2em;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
         .tutorial-link {
             color: #3498db;
@@ -67,24 +67,28 @@
         .tutorial-link:hover {
             text-decoration: underline;
         }
+        .tutorial-description {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .tutorial-tags {
+            margin-bottom: 10px;
+        }
+        .tag {
+            display: inline-block;
+            background: #e1f0fa;
+            color: #3498db;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
         .tutorial-meta {
             display: flex;
             justify-content: space-between;
             color: #7f8c8d;
             font-size: 0.9em;
-            margin-top: 5px;
-        }
-        .tutorial-tags {
-            display: flex;
-            gap: 5px;
-            margin-top: 5px;
-        }
-        .tag {
-            background: #e0e7ff;
-            color: #4f46e5;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
         }
         .pagination {
             display: flex;
@@ -112,43 +116,44 @@
 <body>
     <div class="container">
         <nav>
-            <a href="index.html">Dashboard</a>
-            <a href="logs.html">Operation Logs</a>
-            <a href="tutorials.html">Tutorials</a>
-            <a href="tools.html">Tools</a>
+            <a href="index.html">控制台</a>
+            <a href="logs.html">操作日志</a>
+            <a href="tutorials.html">教程中心</a>
+            <a href="tools.html">工具管理</a>
         </nav>
         
         <header>
-            <h1>MoltBot Tutorials & Resources</h1>
-            <p>Latest tutorials and resources collected automatically</p>
+            <h1>MoltBot 教程中心</h1>
+            <p>发现和学习最新的 MoltBot 使用技巧</p>
         </header>
         
         <div class="controls">
             <div class="filters">
                 <select id="category-filter">
-                    <option value="all">All Categories</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="advanced">Advanced</option>
-                    <option value="configuration">Configuration</option>
-                    <option value="integration">Integration</option>
+                    <option value="all">所有类别</option>
+                    <option value="beginner">初级</option>
+                    <option value="intermediate">中级</option>
+                    <option value="advanced">高级</option>
+                    <option value="integration">集成</option>
+                    <option value="development">开发</option>
                 </select>
                 <input type="date" id="date-filter">
-                <button onclick="filterTutorials()">Apply Filters</button>
+                <button onclick="filterTutorials()">应用筛选</button>
             </div>
             <div>
-                <button onclick="refreshTutorials()">Refresh Tutorials</button>
-                <button onclick="markAsRead()">Mark All as Read</button>
+                <button onclick="refreshTutorials()" class="btn btn-secondary">刷新</button>
+                <button onclick="markAsRead()" class="btn btn-success">标记为已读</button>
             </div>
         </div>
         
         <div class="tutorials-container" id="tutorials-container">
-            <p><em>Searching for latest tutorials...</em></p>
+            <p><em>正在搜索最新教程...</em></p>
         </div>
         
         <div class="pagination">
-            <button onclick="prevPage()">Previous</button>
-            <span id="page-info">Page 1 of 1</span>
-            <button onclick="nextPage()">Next</button>
+            <button onclick="prevPage()">上一页</button>
+            <span id="page-info">第 1 页，共 1 页</span>
+            <button onclick="nextPage()">下一页</button>
         </div>
     </div>
 
@@ -168,48 +173,48 @@
                 // Update timestamp
                 document.getElementById('tutorials-timestamp').textContent = new Date(data.lastUpdated).toLocaleTimeString();
             } catch (error) {
-                console.error('Error loading tutorials:', error);
+                console.error('加载教程错误:', error);
                 
                 // Fallback to sample tutorials if API fails
                 const sampleTutorials = [
                     {
                         id: "1",
-                        title: "Getting Started with MoltBot",
+                        title: "MoltBot 入门指南",
                         url: "#",
                         date: "2026-01-30",
                         category: "beginner",
-                        tags: ["setup", "installation"],
-                        description: "Complete guide to installing and configuring MoltBot for the first time",
+                        tags: ["安装", "配置"],
+                        description: "首次安装和配置 MoltBot 的完整指南",
                         status: "unread"
                     },
                     {
                         id: "2",
-                        title: "Advanced Configuration Tips",
+                        title: "高级配置技巧",
                         url: "#",
                         date: "2026-01-29",
                         category: "advanced",
-                        tags: ["configuration", "optimization"],
-                        description: "Learn how to optimize your MoltBot configuration for maximum efficiency",
+                        tags: ["配置", "优化"],
+                        description: "了解如何优化您的 MoltBot 配置以获得最大效率",
                         status: "unread"
                     },
                     {
                         id: "3",
-                        title: "Integrating with External Services",
+                        title: "与外部服务集成",
                         url: "#",
                         date: "2026-01-28",
                         category: "integration",
-                        tags: ["integration", "api"],
-                        description: "Step-by-step guide to connecting MoltBot with external APIs and services",
+                        tags: ["集成", "API"],
+                        description: "将 MoltBot 连接到外部 API 和服务的分步指南",
                         status: "unread"
                     },
                     {
                         id: "4",
-                        title: "Creating Custom Skills",
+                        title: "创建自定义技能",
                         url: "#",
                         date: "2026-01-27",
                         category: "advanced",
-                        tags: ["skills", "development"],
-                        description: "How to develop and deploy custom skills for your MoltBot instance",
+                        tags: ["技能", "开发"],
+                        description: "如何为您的 MoltBot 实例开发和部署自定义技能",
                         status: "read"
                     }
                 ];
@@ -228,8 +233,8 @@
             container.innerHTML = '';
             
             if (tutorialsToShow.length === 0) {
-                container.innerHTML = '<p>No tutorials available</p>';
-                document.getElementById('page-info').textContent = 'Page 0 of 0';
+                container.innerHTML = '<p>暂无教程可用</p>';
+                document.getElementById('page-info').textContent = '第 0 页，共 0 页';
                 return;
             }
             
@@ -260,7 +265,7 @@
 
             // Update pagination info
             const totalPages = Math.ceil(allTutorials.length / tutorialsPerPage);
-            document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('page-info').textContent = `第 ${currentPage} 页，共 ${totalPages} 页`;
         }
 
         function filterTutorials() {

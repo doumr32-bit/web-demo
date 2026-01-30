@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoltBot Operation Logs</title>
+    <title>MoltBot 操作日志 - 管理控制台</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -13,7 +13,7 @@
             color: #333;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         header {
@@ -30,10 +30,13 @@
             justify-content: space-between;
             margin-bottom: 20px;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .filters {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         select, input, button {
             padding: 8px 12px;
@@ -45,29 +48,45 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 20px;
-            max-height: 70vh;
+            max-height: 60vh;
             overflow-y: auto;
         }
         .log-entry {
-            padding: 15px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
-            font-family: monospace;
+            display: flex;
+            align-items: center;
         }
         .log-entry:last-child {
             border-bottom: none;
         }
         .log-timestamp {
+            min-width: 180px;
+            font-family: monospace;
             color: #7f8c8d;
-            font-weight: bold;
         }
         .log-level {
+            min-width: 80px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
             font-weight: bold;
+            text-align: center;
         }
-        .log-level.info { color: #3498db; }
-        .log-level.warn { color: #f39c12; }
-        .log-level.error { color: #e74c3c; }
+        .log-level.info {
+            background: #d4edda;
+            color: #155724;
+        }
+        .log-level.warn {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .log-level.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
         .log-message {
-            margin-left: 10px;
+            flex-grow: 1;
         }
         .pagination {
             display: flex;
@@ -95,42 +114,42 @@
 <body>
     <div class="container">
         <nav>
-            <a href="index.html">Dashboard</a>
-            <a href="logs.html">Operation Logs</a>
-            <a href="tutorials.html">Tutorials</a>
-            <a href="tools.html">Tools</a>
+            <a href="index.html">控制台</a>
+            <a href="logs.html">操作日志</a>
+            <a href="tutorials.html">教程中心</a>
+            <a href="tools.html">工具管理</a>
         </nav>
         
         <header>
-            <h1>MoltBot Operation Logs</h1>
-            <p>Detailed logs of MoltBot activities and operations</p>
+            <h1>MoltBot 操作日志</h1>
+            <p>实时查看 MoltBot 运行状态和事件记录</p>
         </header>
         
         <div class="controls">
             <div class="filters">
                 <select id="level-filter">
-                    <option value="all">All Levels</option>
-                    <option value="info">Info</option>
-                    <option value="warn">Warning</option>
-                    <option value="error">Error</option>
+                    <option value="all">所有级别</option>
+                    <option value="info">信息</option>
+                    <option value="warn">警告</option>
+                    <option value="error">错误</option>
                 </select>
                 <input type="date" id="date-filter">
-                <button onclick="filterLogs()">Apply Filters</button>
+                <button onclick="filterLogs()">应用筛选</button>
             </div>
             <div>
-                <button onclick="refreshLogs()">Refresh</button>
-                <button onclick="downloadLogs()">Export Logs</button>
+                <button onclick="refreshLogs()" class="btn btn-secondary">刷新</button>
+                <button onclick="downloadLogs()" class="btn btn-primary">下载日志</button>
             </div>
         </div>
         
         <div class="logs-container" id="logs-container">
-            <p><em>Loading logs...</em></p>
+            <p><em>正在加载日志...</em></p>
         </div>
         
         <div class="pagination">
-            <button onclick="prevPage()">Previous</button>
-            <span id="page-info">Page 1 of 1</span>
-            <button onclick="nextPage()">Next</button>
+            <button onclick="prevPage()">上一页</button>
+            <span id="page-info">第 1 页，共 1 页</span>
+            <button onclick="nextPage()">下一页</button>
         </div>
     </div>
 
@@ -150,20 +169,20 @@
                 // Update timestamp
                 document.getElementById('logs-timestamp').textContent = new Date(data.lastUpdated).toLocaleTimeString();
             } catch (error) {
-                console.error('Error loading logs:', error);
+                console.error('加载日志错误:', error);
                 
                 // Fallback to sample logs if API fails
                 const sampleLogs = [
-                    {timestamp: '2026-01-30 19:30:15', level: 'info', message: 'MoltBot initialized successfully'},
-                    {timestamp: '2026-01-30 19:30:16', level: 'info', message: 'Connected to messaging platform'},
-                    {timestamp: '2026-01-30 19:30:17', level: 'info', message: 'Loaded configuration file'},
-                    {timestamp: '2026-01-30 19:30:20', level: 'info', message: 'Started monitoring channels'},
-                    {timestamp: '2026-01-30 19:35:45', level: 'info', message: 'Received new message from user'},
-                    {timestamp: '2026-01-30 19:35:46', level: 'info', message: 'Processed message: "help"'},
-                    {timestamp: '2026-01-30 19:35:47', level: 'info', message: 'Sent response to user'},
-                    {timestamp: '2026-01-30 19:40:22', level: 'warn', message: 'Slow response detected from external API'},
-                    {timestamp: '2026-01-30 19:45:30', level: 'info', message: 'Daily tutorial search initiated'},
-                    {timestamp: '2026-01-30 19:45:31', level: 'info', message: 'Found 3 new tutorials'}
+                    {timestamp: '2026-01-30 19:30:15', level: 'info', message: 'MoltBot 初始化成功'},
+                    {timestamp: '2026-01-30 19:30:16', level: 'info', message: '连接到消息平台'},
+                    {timestamp: '2026-01-30 19:30:17', level: 'info', message: '加载配置文件'},
+                    {timestamp: '2026-01-30 19:30:20', level: 'info', message: '开始监控频道'},
+                    {timestamp: '2026-01-30 19:35:45', level: 'info', message: '收到用户新消息'},
+                    {timestamp: '2026-01-30 19:35:46', level: 'info', message: '处理消息: "help"'},
+                    {timestamp: '2026-01-30 19:35:47', level: 'info', message: '向用户发送响应'},
+                    {timestamp: '2026-01-30 19:40:22', level: 'warn', message: '检测到外部 API 响应缓慢'},
+                    {timestamp: '2026-01-30 19:45:30', level: 'info', message: '启动每日教程搜索'},
+                    {timestamp: '2026-01-30 19:45:31', level: 'info', message: '找到 3 个新教程'}
                 ];
                 
                 allLogs = sampleLogs;
@@ -180,8 +199,8 @@
             container.innerHTML = '';
             
             if (logsToShow.length === 0) {
-                container.innerHTML = '<p>No logs available</p>';
-                document.getElementById('page-info').textContent = 'Page 0 of 0';
+                container.innerHTML = '<p>暂无日志可用</p>';
+                document.getElementById('page-info').textContent = '第 0 页，共 0 页';
                 return;
             }
             
@@ -198,7 +217,7 @@
 
             // Update pagination info
             const totalPages = Math.ceil(allLogs.length / logsPerPage);
-            document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('page-info').textContent = `第 ${currentPage} 页，共 ${totalPages} 页`;
         }
 
         function filterLogs() {

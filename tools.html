@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoltBot Tools & Utilities</title>
+    <title>MoltBot 工具管理 - 管理控制台</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -80,12 +80,30 @@
             background: #fff3cd;
             color: #856404;
         }
+        .status-discovered {
+            background: #cce7ff;
+            color: #004085;
+        }
         .tool-description {
             margin-bottom: 10px;
+        }
+        .tool-tags {
+            margin-bottom: 10px;
+        }
+        .tag {
+            display: inline-block;
+            background: #e1f0fa;
+            color: #3498db;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
         .tool-actions {
             display: flex;
             gap: 10px;
+            margin-bottom: 10px;
         }
         .btn {
             padding: 6px 12px;
@@ -144,48 +162,49 @@
 <body>
     <div class="container">
         <nav>
-            <a href="index.html">Dashboard</a>
-            <a href="logs.html">Operation Logs</a>
-            <a href="tutorials.html">Tutorials</a>
-            <a href="tools.html">Tools</a>
+            <a href="index.html">控制台</a>
+            <a href="logs.html">操作日志</a>
+            <a href="tutorials.html">教程中心</a>
+            <a href="tools.html">工具管理</a>
         </nav>
         
         <header>
-            <h1>MoltBot Tools & Utilities</h1>
-            <p>Discovered and deployed tools for MoltBot ecosystem</p>
+            <h1>MoltBot 工具管理</h1>
+            <p>MoltBot 生态系统的已发现和已部署工具</p>
         </header>
         
         <div class="controls">
             <div class="filters">
                 <select id="status-filter">
-                    <option value="all">All Statuses</option>
-                    <option value="active">Active</option>
-                    <option value="testing">Testing</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="all">所有状态</option>
+                    <option value="active">活跃</option>
+                    <option value="testing">测试中</option>
+                    <option value="inactive">非活跃</option>
+                    <option value="discovered">已发现</option>
                 </select>
                 <select id="category-filter">
-                    <option value="all">All Categories</option>
-                    <option value="development">Development</option>
-                    <option value="monitoring">Monitoring</option>
-                    <option value="integration">Integration</option>
-                    <option value="utilities">Utilities</option>
+                    <option value="all">所有类别</option>
+                    <option value="development">开发</option>
+                    <option value="monitoring">监控</option>
+                    <option value="integration">集成</option>
+                    <option value="utilities">实用工具</option>
                 </select>
-                <button onclick="filterTools()">Apply Filters</button>
+                <button onclick="filterTools()">应用筛选</button>
             </div>
             <div>
-                <button onclick="discoverTools()" class="btn btn-primary">Discover New Tools</button>
-                <button onclick="refreshTools()">Refresh</button>
+                <button onclick="discoverTools()" class="btn btn-primary">发现新工具</button>
+                <button onclick="refreshTools()">刷新</button>
             </div>
         </div>
         
         <div class="tools-container" id="tools-container">
-            <p><em>Discovering MoltBot tools...</em></p>
+            <p><em>正在发现 MoltBot 工具...</em></p>
         </div>
         
         <div class="pagination">
-            <button onclick="prevPage()">Previous</button>
-            <span id="page-info">Page 1 of 1</span>
-            <button onclick="nextPage()">Next</button>
+            <button onclick="prevPage()">上一页</button>
+            <span id="page-info">第 1 页，共 1 页</span>
+            <button onclick="nextPage()">下一页</button>
         </div>
     </div>
 
@@ -205,57 +224,57 @@
                 // Update timestamp
                 document.getElementById('tools-timestamp').textContent = new Date(data.lastUpdated).toLocaleTimeString();
             } catch (error) {
-                console.error('Error loading tools:', error);
+                console.error('加载工具错误:', error);
                 
                 // Fallback to sample tools if API fails
                 const sampleTools = [
                     {
                         id: "1",
-                        name: "MoltBot Config Generator",
-                        description: "Interactive tool to generate MoltBot configuration files",
+                        name: "MoltBot 配置生成器",
+                        description: "交互式工具，用于生成 MoltBot 配置文件",
                         status: "testing",
                         category: "utilities",
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-30",
-                        author: "Community",
-                        tags: ["configuration", "utility"]
+                        author: "社区",
+                        tags: ["配置", "实用工具"]
                     },
                     {
                         id: "2",
-                        name: "MoltBot Performance Monitor",
-                        description: "Real-time monitoring dashboard for MoltBot performance metrics",
+                        name: "MoltBot 性能监控器",
+                        description: "用于 MoltBot 性能指标的实时监控仪表板",
                         status: "active",
                         category: "monitoring",
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-29",
-                        author: "Community",
-                        tags: ["monitoring", "analytics"]
+                        author: "社区",
+                        tags: ["监控", "分析"]
                     },
                     {
                         id: "3",
-                        name: "Skill Creator Assistant",
-                        description: "Web interface for creating and testing new MoltBot skills",
+                        name: "技能创建助手",
+                        description: "用于创建和测试新 MoltBot 技能的 Web 界面",
                         status: "active",
                         category: "development",
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-28",
-                        author: "Community",
-                        tags: ["skills", "development"]
+                        author: "社区",
+                        tags: ["技能", "开发"]
                     },
                     {
                         id: "4",
-                        name: "MoltBot Analytics",
-                        description: "Detailed analytics and reporting for MoltBot usage",
+                        name: "MoltBot 分析工具",
+                        description: "用于 MoltBot 使用情况的详细分析和报告",
                         status: "inactive",
                         category: "monitoring",
                         url: "#",
                         testUrl: "#",
                         dateAdded: "2026-01-27",
-                        author: "Community",
-                        tags: ["analytics", "reporting"]
+                        author: "社区",
+                        tags: ["分析", "报告"]
                     }
                 ];
                 
@@ -273,8 +292,8 @@
             container.innerHTML = '';
             
             if (toolsToShow.length === 0) {
-                container.innerHTML = '<p>No tools available</p>';
-                document.getElementById('page-info').textContent = 'Page 0 of 0';
+                container.innerHTML = '<p>暂无工具可用</p>';
+                document.getElementById('page-info').textContent = '第 0 页，共 0 页';
                 return;
             }
             
@@ -290,20 +309,20 @@
                 card.innerHTML = `
                     <div class="tool-header">
                         <div class="tool-title">${tool.name}</div>
-                        <div class="tool-status status-${tool.status}">${tool.status.charAt(0).toUpperCase() + tool.status.slice(1)}</div>
+                        <div class="tool-status status-${tool.status}">${getStatusText(tool.status)}</div>
                     </div>
                     <div class="tool-description">${tool.description}</div>
                     <div class="tool-tags">
                         ${tagsHtml}
                     </div>
                     <div class="tool-actions">
-                        <a href="${tool.url}" class="btn btn-secondary" target="_blank">View Details</a>
-                        <a href="${tool.testUrl}" class="btn btn-success" target="_blank">Test Tool</a>
-                        <button class="btn btn-warning" onclick="deployTool('${tool.id}', '${tool.name}')">Deploy</button>
+                        <a href="${tool.url}" class="btn btn-secondary" target="_blank">查看详情</a>
+                        <a href="${tool.testUrl}" class="btn btn-success" target="_blank">测试工具</a>
+                        <button class="btn btn-warning" onclick="deployTool('${tool.id}', '${tool.name}')">部署</button>
                     </div>
                     <div class="tool-meta">
-                        <span>Added: ${tool.dateAdded}</span>
-                        <span>Author: ${tool.author}</span>
+                        <span>添加时间: ${tool.dateAdded}</span>
+                        <span>作者: ${tool.author}</span>
                     </div>
                 `;
                 container.appendChild(card);
@@ -311,7 +330,17 @@
 
             // Update pagination info
             const totalPages = Math.ceil(allTools.length / toolsPerPage);
-            document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('page-info').textContent = `第 ${currentPage} 页，共 ${totalPages} 页`;
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'active': '活跃',
+                'inactive': '非活跃',
+                'testing': '测试中',
+                'discovered': '已发现'
+            };
+            return statusMap[status] || status;
         }
 
         function filterTools() {
@@ -345,17 +374,17 @@
 
         function discoverTools() {
             // This would trigger a new discovery process
-            alert('Initiating new tool discovery process...');
+            alert('正在启动新工具发现过程...');
         }
 
         async function deployTool(id, name) {
             // In a real implementation, this would call an API to deploy the tool
             try {
                 // Simulate deployment process
-                alert('Deploying tool: ' + name);
+                alert('正在部署工具: ' + name);
                 
                 // In a real implementation, we would make an API call here:
-                // const response = await fetch(`/api/deploy/${id}`, { method: 'POST' });
+                // const response = await fetch(\`/api/deploy/\${id}\`, { method: 'POST' });
                 // const result = await response.json();
                 
                 // Update the tool status in the local data
@@ -369,8 +398,8 @@
                 // Re-render the tools
                 renderTools();
             } catch (error) {
-                console.error('Deployment error:', error);
-                alert('Deployment failed: ' + error.message);
+                console.error('部署错误:', error);
+                alert('部署失败: ' + error.message);
             }
         }
 
