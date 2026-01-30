@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoltBot Operation Logs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #3498db;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+        select, input, button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .logs-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .log-entry {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-family: monospace;
+        }
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        .log-timestamp {
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        .log-level {
+            font-weight: bold;
+        }
+        .log-level.info { color: #3498db; }
+        .log-level.warn { color: #f39c12; }
+        .log-level.error { color: #e74c3c; }
+        .log-message {
+            margin-left: 10px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .pagination button {
+            padding: 8px 15px;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #3498db;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">Dashboard</a>
+            <a href="logs.html">Operation Logs</a>
+            <a href="tutorials.html">Tutorials</a>
+            <a href="tools.html">Tools</a>
+        </nav>
+        
+        <header>
+            <h1>MoltBot Operation Logs</h1>
+            <p>Detailed logs of MoltBot activities and operations</p>
+        </header>
+        
+        <div class="controls">
+            <div class="filters">
+                <select id="level-filter">
+                    <option value="all">All Levels</option>
+                    <option value="info">Info</option>
+                    <option value="warn">Warning</option>
+                    <option value="error">Error</option>
+                </select>
+                <input type="date" id="date-filter">
+                <button onclick="filterLogs()">Apply Filters</button>
+            </div>
+            <div>
+                <button onclick="refreshLogs()">Refresh</button>
+                <button onclick="downloadLogs()">Export Logs</button>
+            </div>
+        </div>
+        
+        <div class="logs-container" id="logs-container">
+            <p><em>Loading logs...</em></p>
+        </div>
+        
+        <div class="pagination">
+            <button onclick="prevPage()">Previous</button>
+            <span id="page-info">Page 1 of 1</span>
+            <button onclick="nextPage()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // This will be updated with real functionality later
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLogs();
+        });
+        
+        function loadLogs() {
+            // Simulate loading logs
+            setTimeout(function() {
+                const container = document.getElementById('logs-container');
+                container.innerHTML = '';
+                
+                // Sample logs
+                const sampleLogs = [
+                    {timestamp: '2026-01-31 02:30:15', level: 'info', message: 'MoltBot initialized successfully'},
+                    {timestamp: '2026-01-31 02:30:16', level: 'info', message: 'Connected to messaging platform'},
+                    {timestamp: '2026-01-31 02:30:17', level: 'info', message: 'Loaded configuration file'},
+                    {timestamp: '2026-01-31 02:30:20', level: 'info', message: 'Started monitoring channels'},
+                    {timestamp: '2026-01-31 02:35:45', level: 'info', message: 'Received new message from user'},
+                    {timestamp: '2026-01-31 02:35:46', level: 'info', message: 'Processed message: "help"'},
+                    {timestamp: '2026-01-31 02:35:47', level: 'info', message: 'Sent response to user'},
+                    {timestamp: '2026-01-31 02:40:22', level: 'warn', message: 'Slow response detected from external API'},
+                    {timestamp: '2026-01-31 02:45:30', level: 'info', message: 'Daily tutorial search initiated'},
+                    {timestamp: '2026-01-31 02:45:31', level: 'info', message: 'Found 3 new tutorials'}
+                ];
+                
+                sampleLogs.forEach(log => {
+                    const entry = document.createElement('div');
+                    entry.className = 'log-entry';
+                    entry.innerHTML = `
+                        <span class="log-timestamp">${log.timestamp}</span>
+                        <span class="log-level ${log.level}">[${log.level.toUpperCase()}]</span>
+                        <span class="log-message">${log.message}</span>
+                    `;
+                    container.appendChild(entry);
+                });
+            }, 1000);
+        }
+        
+        function filterLogs() {
+            // Implementation will be added later
+            alert('Filtering logs...');
+        }
+        
+        function refreshLogs() {
+            loadLogs();
+        }
+        
+        function downloadLogs() {
+            alert('Downloading logs...');
+        }
+        
+        function prevPage() {
+            alert('Previous page...');
+        }
+        
+        function nextPage() {
+            alert('Next page...');
+        }
+    </script>
+</body>
+</html>

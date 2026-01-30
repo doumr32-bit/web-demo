@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoltBot Tutorials & Resources</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #3498db;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+        select, input, button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .tutorials-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .tutorial-card {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+        }
+        .tutorial-card:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .tutorial-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        .tutorial-link {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .tutorial-link:hover {
+            text-decoration: underline;
+        }
+        .tutorial-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .tutorial-tags {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .tag {
+            background: #e0e7ff;
+            color: #4f46e5;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .pagination button {
+            padding: 8px 15px;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #3498db;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">Dashboard</a>
+            <a href="logs.html">Operation Logs</a>
+            <a href="tutorials.html">Tutorials</a>
+            <a href="tools.html">Tools</a>
+        </nav>
+        
+        <header>
+            <h1>MoltBot Tutorials & Resources</h1>
+            <p>Latest tutorials and resources collected automatically</p>
+        </header>
+        
+        <div class="controls">
+            <div class="filters">
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="configuration">Configuration</option>
+                    <option value="integration">Integration</option>
+                </select>
+                <input type="date" id="date-filter">
+                <button onclick="filterTutorials()">Apply Filters</button>
+            </div>
+            <div>
+                <button onclick="refreshTutorials()">Refresh Tutorials</button>
+                <button onclick="markAsRead()">Mark All as Read</button>
+            </div>
+        </div>
+        
+        <div class="tutorials-container" id="tutorials-container">
+            <p><em>Searching for latest tutorials...</em></p>
+        </div>
+        
+        <div class="pagination">
+            <button onclick="prevPage()">Previous</button>
+            <span id="page-info">Page 1 of 1</span>
+            <button onclick="nextPage()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // This will be updated with real functionality later
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTutorials();
+        });
+        
+        function loadTutorials() {
+            // Simulate loading tutorials
+            setTimeout(function() {
+                const container = document.getElementById('tutorials-container');
+                container.innerHTML = '';
+                
+                // Sample tutorials
+                const sampleTutorials = [
+                    {
+                        title: "Getting Started with MoltBot",
+                        url: "#",
+                        date: "2026-01-30",
+                        category: "beginner",
+                        tags: ["setup", "installation"],
+                        description: "Complete guide to installing and configuring MoltBot for the first time"
+                    },
+                    {
+                        title: "Advanced Configuration Tips",
+                        url: "#",
+                        date: "2026-01-29",
+                        category: "advanced",
+                        tags: ["configuration", "optimization"],
+                        description: "Learn how to optimize your MoltBot configuration for maximum efficiency"
+                    },
+                    {
+                        title: "Integrating with External Services",
+                        url: "#",
+                        date: "2026-01-28",
+                        category: "integration",
+                        tags: ["integration", "api"],
+                        description: "Step-by-step guide to connecting MoltBot with external APIs and services"
+                    },
+                    {
+                        title: "Creating Custom Skills",
+                        url: "#",
+                        date: "2026-01-27",
+                        category: "advanced",
+                        tags: ["skills", "development"],
+                        description: "How to develop and deploy custom skills for your MoltBot instance"
+                    }
+                ];
+                
+                sampleTutorials.forEach(tutorial => {
+                    const card = document.createElement('div');
+                    card.className = 'tutorial-card';
+                    card.innerHTML = `
+                        <div class="tutorial-title">
+                            <a href="${tutorial.url}" class="tutorial-link" target="_blank">${tutorial.title}</a>
+                        </div>
+                        <div class="tutorial-description">${tutorial.description}</div>
+                        <div class="tutorial-tags">
+                            ${tutorial.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="tutorial-meta">
+                            <span>${tutorial.date}</span>
+                            <span>${tutorial.category}</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }, 1000);
+        }
+        
+        function filterTutorials() {
+            // Implementation will be added later
+            alert('Filtering tutorials...');
+        }
+        
+        function refreshTutorials() {
+            loadTutorials();
+        }
+        
+        function markAsRead() {
+            alert('Marked all tutorials as read');
+        }
+        
+        function prevPage() {
+            alert('Previous page...');
+        }
+        
+        function nextPage() {
+            alert('Next page...');
+        }
+    </script>
+</body>
+</html>

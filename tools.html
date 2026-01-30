@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoltBot Tools & Utilities</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #3498db;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .filters {
+            display: flex;
+            gap: 10px;
+        }
+        select, input, button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .tools-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .tool-card {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .tool-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .tool-status {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status-testing {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .tool-description {
+            margin-bottom: 10px;
+        }
+        .tool-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        .btn-success {
+            background: #2ecc71;
+            color: white;
+        }
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        .tool-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .pagination button {
+            padding: 8px 15px;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #3498db;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">Dashboard</a>
+            <a href="logs.html">Operation Logs</a>
+            <a href="tutorials.html">Tutorials</a>
+            <a href="tools.html">Tools</a>
+        </nav>
+        
+        <header>
+            <h1>MoltBot Tools & Utilities</h1>
+            <p>Discovered and deployed tools for MoltBot ecosystem</p>
+        </header>
+        
+        <div class="controls">
+            <div class="filters">
+                <select id="status-filter">
+                    <option value="all">All Statuses</option>
+                    <option value="active">Active</option>
+                    <option value="testing">Testing</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="development">Development</option>
+                    <option value="monitoring">Monitoring</option>
+                    <option value="integration">Integration</option>
+                    <option value="utilities">Utilities</option>
+                </select>
+                <button onclick="filterTools()">Apply Filters</button>
+            </div>
+            <div>
+                <button onclick="discoverTools()" class="btn btn-primary">Discover New Tools</button>
+                <button onclick="refreshTools()">Refresh</button>
+            </div>
+        </div>
+        
+        <div class="tools-container" id="tools-container">
+            <p><em>Discovering MoltBot tools...</em></p>
+        </div>
+        
+        <div class="pagination">
+            <button onclick="prevPage()">Previous</button>
+            <span id="page-info">Page 1 of 1</span>
+            <button onclick="nextPage()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // This will be updated with real functionality later
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTools();
+        });
+        
+        function loadTools() {
+            // Simulate loading tools
+            setTimeout(function() {
+                const container = document.getElementById('tools-container');
+                container.innerHTML = '';
+                
+                // Sample tools
+                const sampleTools = [
+                    {
+                        name: "MoltBot Config Generator",
+                        description: "Interactive tool to generate MoltBot configuration files",
+                        status: "testing",
+                        category: "utilities",
+                        url: "#",
+                        testUrl: "#",
+                        dateAdded: "2026-01-30",
+                        author: "Community"
+                    },
+                    {
+                        name: "MoltBot Performance Monitor",
+                        description: "Real-time monitoring dashboard for MoltBot performance metrics",
+                        status: "active",
+                        category: "monitoring",
+                        url: "#",
+                        testUrl: "#",
+                        dateAdded: "2026-01-29",
+                        author: "Community"
+                    },
+                    {
+                        name: "Skill Creator Assistant",
+                        description: "Web interface for creating and testing new MoltBot skills",
+                        status: "active",
+                        category: "development",
+                        url: "#",
+                        testUrl: "#",
+                        dateAdded: "2026-01-28",
+                        author: "Community"
+                    },
+                    {
+                        name: "MoltBot Analytics",
+                        description: "Detailed analytics and reporting for MoltBot usage",
+                        status: "inactive",
+                        category: "monitoring",
+                        url: "#",
+                        testUrl: "#",
+                        dateAdded: "2026-01-27",
+                        author: "Community"
+                    }
+                ];
+                
+                sampleTools.forEach(tool => {
+                    const card = document.createElement('div');
+                    card.className = 'tool-card';
+                    card.innerHTML = `
+                        <div class="tool-header">
+                            <div class="tool-title">${tool.name}</div>
+                            <div class="tool-status status-${tool.status}">${tool.status.charAt(0).toUpperCase() + tool.status.slice(1)}</div>
+                        </div>
+                        <div class="tool-description">${tool.description}</div>
+                        <div class="tool-actions">
+                            <a href="${tool.url}" class="btn btn-secondary" target="_blank">View Details</a>
+                            <a href="${tool.testUrl}" class="btn btn-success" target="_blank">Test Tool</a>
+                            <button class="btn btn-warning" onclick="deployTool('${tool.name}')">Deploy</button>
+                        </div>
+                        <div class="tool-meta">
+                            <span>Added: ${tool.dateAdded}</span>
+                            <span>Author: ${tool.author}</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }, 1000);
+        }
+        
+        function filterTools() {
+            // Implementation will be added later
+            alert('Filtering tools...');
+        }
+        
+        function refreshTools() {
+            loadTools();
+        }
+        
+        function discoverTools() {
+            alert('Discovering new MoltBot tools...');
+        }
+        
+        function deployTool(name) {
+            alert('Deploying tool: ' + name);
+        }
+        
+        function prevPage() {
+            alert('Previous page...');
+        }
+        
+        function nextPage() {
+            alert('Next page...');
+        }
+    </script>
+</body>
+</html>
