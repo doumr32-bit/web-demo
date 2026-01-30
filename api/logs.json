@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-01-30T19:39:42.790Z",
+  "lastUpdated": "2026-01-30T19:40:05.846Z",
   "logs": [
     {
       "timestamp": "2026-01-30T19:30:58.741Z",
@@ -33,6 +33,16 @@
     },
     {
       "timestamp": "2026-01-30T19:36:19.998Z",
+      "level": "INFO",
+      "component": "MoltBot",
+      "message": "Daily log collection initiated",
+      "details": {
+        "source": "simulated",
+        "eventType": "daily_collection"
+      }
+    },
+    {
+      "timestamp": "2026-01-30T19:40:05.671Z",
       "level": "INFO",
       "component": "MoltBot",
       "message": "Daily log collection initiated",

@@ -118,5 +118,35 @@
     ],
     "description": "Deep dive into advanced MoltBot configuration options.",
     "status": "unread"
+  },
+  {
+    "id": "tutorial-1769802005672",
+    "title": "New MoltBot Feature Tutorial - 1/31/2026",
+    "url": "#",
+    "source": "simulated-search",
+    "date": "2026-01-30T19:40:05.683Z",
+    "category": "beginner",
+    "tags": [
+      "tutorial",
+      "moltbot",
+      "feature"
+    ],
+    "description": "Learn about the latest MoltBot features with this comprehensive tutorial.",
+    "status": "unread"
+  },
+  {
+    "id": "tutorial-1769802005684",
+    "title": "Advanced MoltBot Configuration Guide - 1/31/2026",
+    "url": "#",
+    "source": "simulated-search",
+    "date": "2026-01-30T19:40:05.683Z",
+    "category": "advanced",
+    "tags": [
+      "configuration",
+      "advanced",
+      "moltbot"
+    ],
+    "description": "Deep dive into advanced MoltBot configuration options.",
+    "status": "unread"
   }
 ]

@@ -1,0 +1,47 @@
+{
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": false,
+    "markdown": true
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.advanced": {
+    "debug": false,
+    "enableCodeBlocks": true
+  },
+  "tabnine.experimentalAutoImports": true,
+  "tabnine.inlineSuggestionLanguageIds": [
+    "javascript",
+    "typescript",
+    "python",
+    "java",
+    "cpp",
+    "c",
+    "html",
+    "css"
+  ],
+  "ai.codingAssistant.enabled": true,
+  "editor.suggest.showInlineCompletions": true,
+  "editor.acceptSuggestionOnCommitCharacter": true,
+  "editor.inlineSuggest.enabled": true,
+  "telemetry.enableTelemetry": false,
+  "github.copilot.privacy": "public",
+  "tabnine.maxDisplaySuggestions": 5,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "codeium.enableChat": true,
+  "amazon-q.chat.enabled": true,
+  "blackbox.showWelcomeNotification": false,
+  "editor.minimap.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  "files.autoSave": "onFocusChange",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "workbench.colorTheme": "Default Dark+",
+  "terminal.integrated.fontSize": 14
+}
