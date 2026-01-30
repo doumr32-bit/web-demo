@@ -11,6 +11,7 @@
     "find-tutorials": "node ./scripts/tutorial_finder.js",
     "discover-tools": "node ./scripts/tool_discoverer.js",
     "daily-tasks": "node ./scripts/daily_scheduler.js",
+    "update-api": "node ./scripts/update_api.js",
     "predeploy": "npm run build || echo 'No build script, copying public folder'",
     "deploy": "gh-pages -d .",
     "test": "echo \"Error: no test specified\" && exit 1"
