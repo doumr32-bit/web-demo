@@ -34,15 +34,20 @@ https://doumr32-bit.github.io/web-demo/
 - **GitHub Copilot**: AI 驱动的代码补全和建议
 - **Codeium**: 免费的 AI 代码加速器
 - **Tabnine**: 基于深度学习的代码补全
-- **Amazon Q Developer**: ML 驱动的代码建议
+- **Amazon Q Developer**: ML 驱动的代码建议 (扩展ID: amazon.q-developer)
 - **Blackbox AI**: 代码库理解 AI 助手
+- **Visual Studio IntelliCode**: AI 辅助智能感知
 
 ### 快速安装
 
 运行以下命令快速配置 VSCode AI 环境：
 
 ```bash
+# 原始安装脚本（可能有部分扩展名不准确）
 ./setup_vscode_ai.sh
+
+# 修正后的安装脚本（推荐使用）
+./setup_vscode_ai_fixed.sh
 ```
 
 ### 配置文件
@@ -52,6 +57,8 @@ https://doumr32-bit.github.io/web-demo/
 - `.vscode/settings.json`: VSCode 设置配置
 - `.vscode/keybindings.json`: 键盘快捷键配置
 - `.vscode/extensions.json`: 推荐扩展列表
+- `setup_vscode_ai.sh`: VSCode AI 工具安装脚本
+- `setup_vscode_ai_fixed.sh`: 修正后的安装脚本（推荐）
 
 ## 自动化任务
 

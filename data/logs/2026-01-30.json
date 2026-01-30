@@ -48,5 +48,15 @@
       "source": "simulated",
       "eventType": "daily_collection"
     }
+  },
+  {
+    "timestamp": "2026-01-30T19:43:56.938Z",
+    "level": "INFO",
+    "component": "MoltBot",
+    "message": "Daily log collection initiated",
+    "details": {
+      "source": "simulated",
+      "eventType": "daily_collection"
+    }
   }
 ]
