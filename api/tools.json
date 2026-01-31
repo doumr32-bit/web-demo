@@ -1,16 +1,16 @@
 {
-  "lastUpdated": "2026-01-31T18:09:45.251Z",
+  "lastUpdated": "2026-01-31T18:13:20.631Z",
   "tools": [
     {
-      "id": "tool-1769801464157",
-      "name": "MoltBot Assistant 1/31/2026",
+      "id": "tool-1769883200469",
+      "name": "MoltBot Assistant 2/1/2026",
       "description": "A helpful assistant for MoltBot configuration and management.",
       "status": "discovered",
       "category": "utilities",
       "source": "simulated-discovery",
       "url": "#",
       "testUrl": "#",
-      "dateAdded": "2026-01-30T19:31:04.168Z",
+      "dateAdded": "2026-01-31T18:13:20.469Z",
       "author": "Simulated Discovery",
       "tags": [
         "assistant",
@@ -19,219 +19,15 @@
       ]
     },
     {
-      "id": "tool-1769801464169",
-      "name": "MoltBot Analyzer 1/31/2026",
+      "id": "tool-1769883200470",
+      "name": "MoltBot Analyzer 2/1/2026",
       "description": "Analyzes MoltBot performance and suggests optimizations.",
       "status": "discovered",
       "category": "monitoring",
       "source": "simulated-discovery",
       "url": "#",
       "testUrl": "#",
-      "dateAdded": "2026-01-30T19:31:04.168Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "analysis",
-        "performance",
-        "monitoring"
-      ]
-    },
-    {
-      "id": "tool-1769801466711",
-      "name": "MoltBot Assistant 1/31/2026",
-      "description": "A helpful assistant for MoltBot configuration and management.",
-      "status": "discovered",
-      "category": "utilities",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:31:06.711Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "assistant",
-        "utility",
-        "moltbot"
-      ]
-    },
-    {
-      "id": "tool-1769801466712",
-      "name": "MoltBot Analyzer 1/31/2026",
-      "description": "Analyzes MoltBot performance and suggests optimizations.",
-      "status": "discovered",
-      "category": "monitoring",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:31:06.711Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "analysis",
-        "performance",
-        "monitoring"
-      ]
-    },
-    {
-      "id": "tool-1769801655598",
-      "name": "MoltBot Assistant 1/31/2026",
-      "description": "A helpful assistant for MoltBot configuration and management.",
-      "status": "discovered",
-      "category": "utilities",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:34:15.598Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "assistant",
-        "utility",
-        "moltbot"
-      ]
-    },
-    {
-      "id": "tool-1769801655599",
-      "name": "MoltBot Analyzer 1/31/2026",
-      "description": "Analyzes MoltBot performance and suggests optimizations.",
-      "status": "discovered",
-      "category": "monitoring",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:34:15.598Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "analysis",
-        "performance",
-        "monitoring"
-      ]
-    },
-    {
-      "id": "tool-1769801783345",
-      "name": "MoltBot Assistant 1/31/2026",
-      "description": "A helpful assistant for MoltBot configuration and management.",
-      "status": "discovered",
-      "category": "utilities",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:36:23.356Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "assistant",
-        "utility",
-        "moltbot"
-      ]
-    },
-    {
-      "id": "tool-1769801783357",
-      "name": "MoltBot Analyzer 1/31/2026",
-      "description": "Analyzes MoltBot performance and suggests optimizations.",
-      "status": "discovered",
-      "category": "monitoring",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:36:23.356Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "analysis",
-        "performance",
-        "monitoring"
-      ]
-    },
-    {
-      "id": "tool-1769802005683",
-      "name": "MoltBot Assistant 1/31/2026",
-      "description": "A helpful assistant for MoltBot configuration and management.",
-      "status": "discovered",
-      "category": "utilities",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:40:05.683Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "assistant",
-        "utility",
-        "moltbot"
-      ]
-    },
-    {
-      "id": "tool-1769802005684",
-      "name": "MoltBot Analyzer 1/31/2026",
-      "description": "Analyzes MoltBot performance and suggests optimizations.",
-      "status": "discovered",
-      "category": "monitoring",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:40:05.683Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "analysis",
-        "performance",
-        "monitoring"
-      ]
-    },
-    {
-      "id": "tool-1769802236950",
-      "name": "MoltBot Assistant 1/31/2026",
-      "description": "A helpful assistant for MoltBot configuration and management.",
-      "status": "discovered",
-      "category": "utilities",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:43:56.950Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "assistant",
-        "utility",
-        "moltbot"
-      ]
-    },
-    {
-      "id": "tool-1769802236951",
-      "name": "MoltBot Analyzer 1/31/2026",
-      "description": "Analyzes MoltBot performance and suggests optimizations.",
-      "status": "discovered",
-      "category": "monitoring",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:43:56.950Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "analysis",
-        "performance",
-        "monitoring"
-      ]
-    },
-    {
-      "id": "tool-1769802391015",
-      "name": "MoltBot Assistant 1/31/2026",
-      "description": "A helpful assistant for MoltBot configuration and management.",
-      "status": "discovered",
-      "category": "utilities",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:46:31.015Z",
-      "author": "Simulated Discovery",
-      "tags": [
-        "assistant",
-        "utility",
-        "moltbot"
-      ]
-    },
-    {
-      "id": "tool-1769802391016",
-      "name": "MoltBot Analyzer 1/31/2026",
-      "description": "Analyzes MoltBot performance and suggests optimizations.",
-      "status": "discovered",
-      "category": "monitoring",
-      "source": "simulated-discovery",
-      "url": "#",
-      "testUrl": "#",
-      "dateAdded": "2026-01-30T19:46:31.015Z",
+      "dateAdded": "2026-01-31T18:13:20.469Z",
       "author": "Simulated Discovery",
       "tags": [
         "analysis",
