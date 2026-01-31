@@ -215,7 +215,7 @@
 
         async function loadTools() {
             try {
-                const response = await fetch('api/tools.json');
+                const response = await fetch('/web-demo/api/tools.json');
                 const data = await response.json();
                 
                 allTools = data.tools || [];

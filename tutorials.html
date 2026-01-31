@@ -164,7 +164,7 @@
 
         async function loadTutorials() {
             try {
-                const response = await fetch('api/tutorials.json');
+                const response = await fetch('/web-demo/api/tutorials.json');
                 const data = await response.json();
                 
                 allTutorials = data.tutorials || [];

@@ -148,7 +148,7 @@
         async function loadData() {
             try {
                 // Load logs
-                const logsResponse = await fetch('api/logs.json');
+                const logsResponse = await fetch('/web-demo/api/logs.json');
                 const logsData = await logsResponse.json();
                 
                 const logsContainer = document.getElementById('logs-container');
@@ -165,7 +165,7 @@
                 document.getElementById('logs-timestamp').textContent = new Date(logsData.lastUpdated).toLocaleTimeString();
                 
                 // Load tutorials
-                const tutorialsResponse = await fetch('api/tutorials.json');
+                const tutorialsResponse = await fetch('/web-demo/api/tutorials.json');
                 const tutorialsData = await tutorialsResponse.json();
                 
                 const tutorialsContainer = document.getElementById('tutorials-container');
@@ -182,7 +182,7 @@
                 document.getElementById('tutorials-timestamp').textContent = new Date(tutorialsData.lastUpdated).toLocaleTimeString();
                 
                 // Load tools
-                const toolsResponse = await fetch('api/tools.json');
+                const toolsResponse = await fetch('/web-demo/api/tools.json');
                 const toolsData = await toolsResponse.json();
                 
                 const toolsContainer = document.getElementById('tools-container');

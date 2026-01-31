@@ -160,7 +160,7 @@
 
         async function loadLogs() {
             try {
-                const response = await fetch('api/logs.json');
+                const response = await fetch('/web-demo/api/logs.json');
                 const data = await response.json();
                 
                 allLogs = data.logs || [];
