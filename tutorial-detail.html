@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="tutorial-title">教程详情 - MoltBot 管理控制台</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #3498db;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        header {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .tutorial-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .tutorial-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .tutorial-body {
+            margin-top: 20px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .tags {
+            margin: 15px 0;
+        }
+        .tag {
+            display: inline-block;
+            background: #e1f0fa;
+            border: 1px solid #3498db;
+            border-radius: 12px;
+            padding: 4px 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/web-demo/">控制台</a>
+            <a href="/web-demo/logs.html">操作日志</a>
+            <a href="/web-demo/tutorials.html">教程中心</a>
+            <a href="/web-demo/tools.html">工具管理</a>
+        </nav>
+        
+        <header>
+            <h1 id="tutorial-header">加载中...</h1>
+            <div class="tutorial-meta">
+                <div>分类: <span id="tutorial-category">-</span></div>
+                <div>日期: <span id="tutorial-date">-</span></div>
+                <div>来源: <span id="tutorial-source">-</span></div>
+            </div>
+            <div class="tags">
+                标签: <span id="tutorial-tags"></span>
+            </div>
+        </header>
+        
+        <div class="tutorial-content">
+            <a href="/web-demo/tutorials.html" class="back-button">← 返回教程列表</a>
+            
+            <div class="tutorial-body">
+                <p id="tutorial-description">正在加载教程内容...</p>
+                
+                <div id="tutorial-full-content">
+                    <!-- Full tutorial content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load tutorial data based on URL parameter
+        async function loadTutorialDetail() {
+            try {
+                // Get tutorial ID from URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const tutorialId = urlParams.get('id');
+                
+                if (!tutorialId) {
+                    document.getElementById('tutorial-header').textContent = '未指定教程';
+                    document.getElementById('tutorial-description').textContent = '请提供有效的教程ID。';
+                    return;
+                }
+                
+                // Load all tutorials from API
+                const response = await fetch('/web-demo/api/tutorials.json');
+                const data = await response.json();
+                
+                // Find the specific tutorial
+                const tutorial = data.tutorials.find(t => t.id === tutorialId);
+                
+                if (!tutorial) {
+                    document.getElementById('tutorial-header').textContent = '教程未找到';
+                    document.getElementById('tutorial-description').textContent = '未找到指定ID的教程。';
+                    return;
+                }
+                
+                // Populate tutorial details
+                document.getElementById('tutorial-title').textContent = `${tutorial.title} - MoltBot 教程详情`;
+                document.getElementById('tutorial-header').textContent = tutorial.title;
+                document.getElementById('tutorial-description').textContent = tutorial.description || '暂无详细描述。';
+                
+                // Fill meta information
+                document.getElementById('tutorial-category').textContent = tutorial.category || '-';
+                document.getElementById('tutorial-date').textContent = new Date(tutorial.date).toLocaleString() || '-';
+                document.getElementById('tutorial-source').textContent = tutorial.source || '-';
+                
+                // Add tags
+                const tagsContainer = document.getElementById('tutorial-tags');
+                if (tutorial.tags && tutorial.tags.length > 0) {
+                    tagsContainer.innerHTML = tutorial.tags.map(tag => 
+                        `<span class="tag">${tag}</span>`
+                    ).join('');
+                } else {
+                    tagsContainer.textContent = '-';
+                }
+                
+                // Add some sample content if available
+                const contentContainer = document.getElementById('tutorial-full-content');
+                contentContainer.innerHTML = `
+                    <h2>教程内容</h2>
+                    <p>这是关于 "${tutorial.title}" 的详细教程内容。</p>
+                    <p>本教程涵盖了以下主题：</p>
+                    <ul>
+                        <li>MoltBot 的基本概念</li>
+                        <li>如何使用本教程介绍的功能</li>
+                        <li>最佳实践和注意事项</li>
+                        <li>常见问题解答</li>
+                    </ul>
+                    <p>更多详细信息，请参考 MoltBot 官方文档或联系技术支持。</p>
+                `;
+            } catch (error) {
+                console.error('加载教程详情错误:', error);
+                document.getElementById('tutorial-header').textContent = '加载失败';
+                document.getElementById('tutorial-description').textContent = '无法加载教程详情。请稍后重试。';
+            }
+        }
+
+        // Load tutorial when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTutorialDetail();
+        });
+    </script>
+</body>
+</html>

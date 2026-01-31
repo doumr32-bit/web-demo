@@ -172,7 +172,7 @@
                 if (tutorialsData.tutorials && tutorialsData.tutorials.length > 0) {
                     tutorialsContainer.innerHTML = tutorialsData.tutorials.slice(0, 5).map(tutorial => 
                         `<div class="tutorial-item">
-                            <a href="${tutorial.url}" target="_blank">${tutorial.title}</a>
+                            <a href="/web-demo/tutorial-detail.html?id=${tutorial.id}">${tutorial.title}</a>
                             <div class="log-date">${tutorial.date} (${tutorial.category})</div>
                         </div>`
                     ).join('');
